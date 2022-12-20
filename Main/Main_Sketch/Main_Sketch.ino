@@ -24,7 +24,6 @@ double on_turtle; // 거북목 상태인 각도 기준값. 회귀분석을 통�
 /* Function Definition */
 
 double resist_to_angle(void);
-double distance_from_body(void);
 void buzzer(int length, int time);
 void i2c_lcd(char* text);
 int joystick(void);
