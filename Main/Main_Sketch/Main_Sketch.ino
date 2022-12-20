@@ -1,15 +1,25 @@
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
+#include <pitches.h>
 
 /* Global Variable */
-double angle_initial = 0; // 구부림 센서에서 처음 return되는 값 if 기준치 이상, ERROR
 
-int flex_pin = 0;
-/* temporary Varialbe */
-double on_turtle; // 거북목 상태인 각도 기준값. 회귀분석을 통해 알아낼 예정
+double angle_initial = 0; // 구부림 센서에서 처음 return되는 값. if 기준치 이상, ERROR.
+int flex_pin = 0; // 구부림센서 핀 번호
+int buzzer_pin = 0; // 부저(스피커) 핀 번호
+
+
+
+/* Reference Value */
+
+double on_turtle; // 거북목 상태인 각도 기준값. 회귀분석을 통해 알아낼 예정이며, 상수 값.
+
+
 
 /* Function Definition */
+
 double resist_to_angle(void);
+void buzzer(int length, int time);
 
 void setup() {
     // put your setup code here, to run once:
@@ -19,7 +29,7 @@ void setup() {
 
     angle_initial = resist_to_angle();
     if (angle_initial >= on_turtle) {
-
+        buzzer(500,4);
     }
 
 
@@ -31,9 +41,28 @@ void loop() {
 
 }
 
+
+/**
+ * @brief 저항값을 각도로 만들기 위한 함수.
+ * @details 함수 내에서 휨센서로 저항값을 입력받고, 미리 계산된 선형회귀 식에 따라 각도 값을 return한다.
+ * @param void
+ * @return double 값의 각도를 return한다.
+ */
 double resist_to_angle(void) {
-    // 선형회귀로 식 구하기
     double resist = analogRead(0); // 구부림 센서의 return value
-    double angle = 1.0 * resist + 0.0;
+    double angle = 1.0 * resist + 0.0; // 선형회귀로 식 구하기
     return angle;
+}
+
+
+
+/**
+ * @brief 거북목 상태일 때 작동시킬 Buzzer(Speaker).
+ * @param length 작동시킬 길이. ms 단위.
+ * @param time 작동시킬 횟수. (삑 삑 삑 삑)
+ */
+void buzzer(int length, int time) {
+    for (int k = 0; k < time; k++) {
+        tone(buzzer_pin, NOTE_C5, length);
+    }
 }
