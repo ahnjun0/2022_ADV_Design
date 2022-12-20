@@ -24,3 +24,8 @@
         │   └ Main_Sketch.ino
         └ Regression
             └ main.py
+
+## 기타 공지사항
+
+- 함수 작성 시 Doxygen(@brief, @param, @return 등)을 이용하여 설명합시다.
+- 변수 이름은 간결하게, snake_case를 이용합시다.
