@@ -103,12 +103,3 @@ void i2c_lcd(char* text) {
 int joystick(void){
 
 }
-
-/**
- * @brief 초음파 센서를 이용해서 신체와의 거리를 구합니다.
- * @details 
- * @return double 
- */
-double distance_from_body(void){
-
-}
