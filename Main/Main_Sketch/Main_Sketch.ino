@@ -80,6 +80,7 @@ void buzzer(int length, int time) {
 /**
  * @brief text로 들어온 파일을 16*2 LCD에 출력하도록 하는 함수입니다.
  * @details 입력은 16자 전부가 들어옵니다.
+ *           https://popcorn16.tistory.com/206 참고하시면 좋습니다.
  * @param text pointer 방식으로 char* 문자열이 들어옵니다
  */
 void i2c_lcd(char* text) {
