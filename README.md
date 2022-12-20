@@ -24,7 +24,6 @@
     │   ├ Main_Sketch
     │   │   └ Main_Sketch.ino // 착용하게 될 Main Arduino에 컴파일하는 Sketch file
     │   │
-    │   │
     │   ├ Sub_Sketch
     │   │   └ Sub_Sketch.ino // 초음파 센서를 연결하게 될 Sub Arduino에 컴파일하는 Sketch file
     │   │
