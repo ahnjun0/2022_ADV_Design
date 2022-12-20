@@ -1,5 +1,8 @@
+//////////
 // I2C LCD를 연결하기 위해, I2C Address를 얻기 위한 과정입니다.
 // https://playground.arduino.cc/Main/I2cScanner/
+//////////
+
 
 // --------------------------------------
 // i2c_scanner
