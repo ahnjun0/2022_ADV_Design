@@ -26,6 +26,7 @@ double on_turtle; // 거북목 상태인 각도 기준값, 상수 값.
 double resist_to_angle(void);
 void buzzer(int length, int time);
 void i2c_lcd(char* text, int k);
+void tx_message(char* message);
 int joystick(void);
 
 void setup() {
@@ -35,9 +36,12 @@ void setup() {
     Serial2.begin(9600); // 스마트폰으로 Data Tx
 
     angle_initial = resist_to_angle();
-    if (angle_initial >= on_turtle) {
+    while (angle_initial >= on_turtle) {
         buzzer(500,4);
-        i2c
+        i2c_lcd("Angle Exceed Plz", 0);
+        i2c_lcd(" Remeasurement! ", 1);
+        delay(3000);
+        angle_initial = resist_to_angle();
     }
 
 
@@ -103,4 +107,18 @@ void i2c_lcd(char* text, int k) {
  */
 int joystick(void){
 
+}
+
+/**
+ * @brief 휴대폰으로 메시지를 전송하는 함수입니다.
+ * @details 어떤 메시지를 전송할까요???
+ *           최초 아이디어는 앱 개발까지 끝내놓고 특정한 Data가 입력되면, 동영상을 띄우던가 하는
+ *           그러한 아이디어를 제시했었는데, 개발 시간이 약간 부족해서
+ *           단순한 char[] 메시지 정도밖에는 전송할 수 없을 거 같습니다.
+ *           영상 링크를 전송할까요?
+ *           아니면 현재 상태가 거북목임을 인지할 수 있는 메시지 정도만을 전송할까요?
+ *           이거 확인하면 카톡방에 카톡좀 남겨주세요... 밤에 혼자서 제 파트 하고있으려니 외롭군요
+ * @param message 
+ */
+void tx_message(char* message) {
 }
