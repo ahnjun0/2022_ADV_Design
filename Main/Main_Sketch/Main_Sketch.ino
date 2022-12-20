@@ -17,7 +17,7 @@ int joystick_SW_pin = 0; // 조이스틱 SW 핀 번호
 
 /* Reference Value */
 
-double on_turtle; // 거북목 상태인 각도 기준값. 회귀분석을 통해 알아낼 예정이며, 상수 값.
+double on_turtle; // 거북목 상태인 각도 기준값, 상수 값.
 
 
 
@@ -37,6 +37,7 @@ void setup() {
     angle_initial = resist_to_angle();
     if (angle_initial >= on_turtle) {
         buzzer(500,4);
+        i2c
     }
 
 
@@ -79,11 +80,12 @@ void buzzer(int length, int time) {
 
 /**
  * @brief text로 들어온 파일을 16*2 LCD에 출력하도록 하는 함수입니다.
- * @details 입력은 16자 전부가 들어옵니다.
+ * @details 입력은 16자 전부와, 줄 번호가 들어옵니다. (0번 줄, 1번 줄)
  *           https://popcorn16.tistory.com/206 참고하시면 좋습니다.
  * @param text pointer 방식으로 char* 문자열이 들어옵니다
+ * @param k int 방식으로 줄 번호를 알려줍니다. (k = 0일때 16x2에서 0번째 줄)
  */
-void i2c_lcd(char* text) {
+void i2c_lcd(char* text, int k) {
 
 }
 
