@@ -25,7 +25,7 @@ double on_turtle; // 거북목 상태인 각도 기준값, 상수 값.
 
 double resist_to_angle(void);
 void buzzer(int length, int time);
-void i2c_lcd(char* text);
+void i2c_lcd(char* text, int k);
 int joystick(void);
 
 void setup() {
