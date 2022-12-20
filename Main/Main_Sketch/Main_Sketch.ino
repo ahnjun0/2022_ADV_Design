@@ -24,6 +24,7 @@ double on_turtle; // 거북목 상태인 각도 기준값. 회귀분석을 통�
 /* Function Definition */
 
 double resist_to_angle(void);
+double distance_from_body(void);
 void buzzer(int length, int time);
 void i2c_lcd(char* text);
 int joystick(void);
@@ -100,5 +101,14 @@ void i2c_lcd(char* text) {
  * @return int 
  */
 int joystick(void){
+
+}
+
+/**
+ * @brief 초음파 센서를 이용해서 신체와의 거리를 구합니다.
+ * @details 
+ * @return double 
+ */
+double distance_from_body(void){
 
 }
