@@ -19,11 +19,13 @@
     │   └ Plan
     │       ├ 기자재신청목록_02조_정컴침팬지(11.18).xlsx
     │       └ 프로젝트 설계 발표자료 초안_02조_정컴침팬지(11.18).pptx
-    └ Main
-        ├ Main_Sketch
-        │   └ Main_Sketch.ino
-        └ Regression
-            └ main.py
+    ├ Main
+    │   ├ Main_Sketch
+    │   │   ├ Main_Sketch.ino // 최종 컴파일할 Sketch 파일
+    │   │   └ I2C_Scanner.ino // I2C Address 확인용
+    │   └ Regression
+    │       └ main.py
+    └ README.md
 
 ## 기타 공지사항
 
