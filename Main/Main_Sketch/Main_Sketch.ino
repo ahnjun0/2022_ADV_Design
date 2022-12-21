@@ -34,7 +34,12 @@ void setup() {
     Serial.begin(9600);
     Serial1.begin(9600); // 초음파센서에서 Data Rx
     Serial2.begin(9600); // 스마트폰으로 Data Tx
-
+    
+    lcd.begin(); //LCD 초기화
+    lcd.backlight(); //백라이트 on
+    
+    pinMode(joystick_SW_pin, INPUT_PULLUP);//z축 버튼 
+    
     angle_initial = resist_to_angle();
     while (angle_initial >= on_turtle) {
         buzzer(500,4);
@@ -90,7 +95,8 @@ void buzzer(int length, int time) {
  * @param k int 방식으로 줄 번호를 알려줍니다. (k = 0일때 16x2에서 0번째 줄)
  */
 void i2c_lcd(char* text, int k) {
-
+    lcd.setCursor(0, k);
+    lcd.print(text);
 }
 
 
@@ -106,7 +112,20 @@ void i2c_lcd(char* text, int k) {
  * @return int 
  */
 int joystick(void){
+    int joy_x = analogRead(joystick_VRX_pin);
+    int joy_y = analogRead(joystick_VRY_pin);
+    int joy_z = digitalRead(joystick_SW_pin);
+    int control = 0;
+  
+    if (joy_x < 512) control = 3;
+    if (joy_x > 512) control = 4;
+    if (joy_y < 512) control = 1;
+    if (joy_y > 512) control = 2;
+    if (joy_z == LOW) control = 5;
 
+    delay(100);
+
+    return control;
 }
 
 /**
