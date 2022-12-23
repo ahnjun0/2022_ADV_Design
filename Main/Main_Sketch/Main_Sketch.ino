@@ -1,10 +1,6 @@
-#include <LiquidCrystal_I2C.h>
-
-
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 #include <pitches.h>
-#include <stdlib.h>
 
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
@@ -50,9 +46,7 @@ void setup() {
     
     lcd.begin(); //LCD 초기화
     lcd.backlight(); //백라이트 on
-    char* text = "Hello, World!";
-    i2c_lcd(text,0);
-    i2c_lcd(text,1);
+
     
     pinMode(joystick_SW_pin, INPUT_PULLUP);//z축 버튼 
 //    
@@ -74,7 +68,7 @@ void setup() {
 void loop() {
     // put your main code here, to run repeatedly:
 
-    i2c_lcd("ABCDEFU",0);
+
 /*
  * 들어온 값을 if로 비교해서
  * 만약 그 값이 거북목 기준값보다 크다면
@@ -98,7 +92,7 @@ void loop() {
     if ((angle < on_turtle_angle) || (dis_initial - now_dis > on_turtle_distance)) {
         char* message = "your neck will be dick.\n whatch this video.\nhttps://www.youtube.com/watch?v=TWGXLs5a8Ig";
         tx_message(message);
-        i2c_lcd("Hello, World!",0);
+        i2c_lcd("  BUZZER ON!!!  ",0);
         buzzer(100, 3);
         //delay(1000);
 //    }
