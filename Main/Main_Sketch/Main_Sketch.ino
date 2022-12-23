@@ -29,7 +29,7 @@ char buffer[20];
 /* Function Definition */
 
 double resist_to_angle(void);
-double distance(void);
+int distance(void);
 void buzzer(int length, int time);
 void i2c_lcd(char* text, int k);
 void tx_message(char* message);
@@ -73,12 +73,15 @@ void loop() {
  * 3. tx_message() 함수를 이용해서 휴대폰으로 보낸다.
 */
 
+    // int angle = resist_to_angle();
+    int angle = 1030;
+    int dis = distance();
 
-  if (Serial1.available()) 
-  {
-    double dis = distance();
-    Serial.println(dis);
-  }
+    if ((angle > on_turtle_angle) || (dis > on_turtle_distance)) {
+        char* message = "your neck will be dick.";
+        tx_message(message);
+    }
+    
 }
 
 
@@ -157,12 +160,11 @@ int joystick(void){
  * @param void
  * @return int
  */
-double distance(void){
+int distance(void){
     while (Serial1.available()) {
-        char data = Serial1.read();
-//        Serial.print(data);
+        int data = Serial1.read();
 
-        return atof(data);
+        return data - '0';
     }
 }
 
@@ -174,4 +176,5 @@ double distance(void){
  * @param message 
  */
 void tx_message(char* message) {
+    Serial2.println(message);
 }
