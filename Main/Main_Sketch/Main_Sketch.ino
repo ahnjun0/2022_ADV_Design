@@ -17,7 +17,8 @@ int joystick_SW_pin = 0; // 조이스틱 SW 핀 번호
 
 /* Reference Value */
 
-double on_turtle; // 거북목 상태인 각도 기준값, 상수 값.
+double on_turtle_angle; // 거북목 상태인 각도 기준값, 상수 값.
+double on_turtle_distance; // 거북목 상태인 거리 기준값, 상수 값
 
 
 
@@ -28,6 +29,8 @@ void buzzer(int length, int time);
 void i2c_lcd(char* text, int k);
 void tx_message(char* message);
 int joystick(void);
+// void menutree_depth_1(void);
+// void menutree_depth_2(void);
 
 void setup() {
     // put your setup code here, to run once:
@@ -55,6 +58,15 @@ void setup() {
 
 void loop() {
     // put your main code here, to run repeatedly:
+
+
+/*
+ * 들어온 값을 if로 비교해서
+ * 만약 그 값이 거북목 기준값보다 크다면
+ * 1. buzzer() 함수를 이용해서 buzzer를 울리고
+ * 2. i2c_lcd() 함수를 이용해서 lcd에 출력하고
+ * 3. tx_message() 함수를 이용해서 휴대폰으로 보낸다.
+*/
 
 }
 

@@ -16,9 +16,13 @@
 
     ahnjun0/2022_ADV_Design
     ├ Document
-    │   └ Plan
-    │       ├ 기자재신청목록_02조_정컴침팬지(11.18).xlsx
-    │       └ 프로젝트 설계 발표자료 초안_02조_정컴침팬지(11.18).pptx
+    │   ├ Plan
+    │   │   ├ 기자재신청목록_02조_정컴침팬지(11.18).xlsx
+    │   │   └ 프로젝트 설계 발표자료 초안_02조_정컴침팬지(11.18).pptx
+    │   │   
+    │   └ 3DPrinter_stl
+    │       ├ Body.stl
+    │       └ Cover.stl
     │
     ├ Main
     │   ├ Main_Sketch
