@@ -17,8 +17,8 @@ int joystick_SW_pin = 0; // 조이스틱 SW 핀 번호
 
 /* Reference Value */
 
-double on_turtle_angle; // 거북목 상태인 각도 기준값, 상수 값.
-double on_turtle_distance; // 거북목 상태인 거리 기준값, 상수 값
+double on_turtle_angle=1023; // 거북목 상태인 각도 기준값, 상수 값.
+double on_turtle_distance=1023; // 거북목 상태인 거리 기준값, 상수 값
 
 
 
@@ -38,13 +38,13 @@ void setup() {
     Serial1.begin(9600); // 초음파센서에서 Data Rx
     Serial2.begin(9600); // 스마트폰으로 Data Tx
     
-    lcd.begin(); //LCD 초기화
+    lcd.begin(16,2); //LCD 초기화
     lcd.backlight(); //백라이트 on
     
     pinMode(joystick_SW_pin, INPUT_PULLUP);//z축 버튼 
     
     angle_initial = resist_to_angle();
-    while (angle_initial >= on_turtle) {
+    while (angle_initial >= on_turtle_angle) {
         buzzer(500,4);
         i2c_lcd("Angle Exceed Plz", 0);
         i2c_lcd(" Remeasurement! ", 1);
@@ -68,6 +68,11 @@ void loop() {
  * 3. tx_message() 함수를 이용해서 휴대폰으로 보낸다.
 */
 
+
+  if (Serial1.available()) 
+  {
+    distance();
+  }
 }
 
 
@@ -138,6 +143,20 @@ int joystick(void){
     delay(100);
 
     return control;
+}
+
+/**
+ * @brief 모니터와 이용자의 거리를 전송받는 함수입니다.
+ * @details
+ * @param void
+ * @return int
+ */
+int distance(void){
+  if (Serial1.available()) {
+    char data = Serial1.read();
+    Serial.print(data);
+    return (int)data;
+  }
 }
 
 /**
