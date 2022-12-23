@@ -1,6 +1,7 @@
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 #include <pitches.h>
+#include <stdlib.h>
 
 LiquidCrystal_I2C lcd(0x00, 16, 2);
 
@@ -20,11 +21,15 @@ int joystick_SW_pin = 0; // 조이스틱 SW 핀 번호
 double on_turtle_angle=1023; // 거북목 상태인 각도 기준값, 상수 값.
 double on_turtle_distance=1023; // 거북목 상태인 거리 기준값, 상수 값
 
+/* Temp Value */
+char buffer[20];
+
 
 
 /* Function Definition */
 
 double resist_to_angle(void);
+double distance(void);
 void buzzer(int length, int time);
 void i2c_lcd(char* text, int k);
 void tx_message(char* message);
@@ -71,7 +76,8 @@ void loop() {
 
   if (Serial1.available()) 
   {
-    distance();
+    double dis = distance();
+    Serial.println(dis);
   }
 }
 
@@ -151,12 +157,13 @@ int joystick(void){
  * @param void
  * @return int
  */
-int distance(void){
-  if (Serial1.available()) {
-    char data = Serial1.read();
-    Serial.print(data);
-    return (int)data;
-  }
+double distance(void){
+    while (Serial1.available()) {
+        char data = Serial1.read();
+//        Serial.print(data);
+
+        return atof(data);
+    }
 }
 
 /**
