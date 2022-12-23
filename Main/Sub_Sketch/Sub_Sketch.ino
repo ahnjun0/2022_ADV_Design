@@ -24,7 +24,9 @@ void loop() {
     digitalWrite(trigpin, LOW);
     float duration = pulseIn(echopin, HIGH);
     float distance = duration * 340 / 10000 / 2;
-    Serial1.write((char*)&distance, sizeof(int));
+    
+    Serial1.println(distance);
+
     Serial.println(distance);
 }
 
