@@ -141,6 +141,19 @@ int joystick(void){
 }
 
 /**
+ * @brief 모니터와 이용자의 거리를 전송받는 함수입니다.
+ * @details
+ * @param void
+ * @return int
+ */
+int distance(){
+  if (Serial1.available()) {
+    char data = Serial.read();
+    return (int)data;
+  }
+}
+
+/**
  * @brief 휴대폰으로 메시지를 전송하는 함수입니다.
  * @details Plan A. 현재 각도와 영상 링크 등이 담긴 텍스트 메시지를
  *                   BLuetooth Terminal HC-05 APP으로 전송 (시간상 문제로 가장 유력)
