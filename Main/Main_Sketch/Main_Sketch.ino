@@ -1,15 +1,19 @@
+#include <LiquidCrystal_I2C.h>
+
+
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 #include <pitches.h>
 #include <stdlib.h>
 
-LiquidCrystal_I2C lcd(0x00, 16, 2);
+LiquidCrystal_I2C lcd(0x27, 16, 2);
 
 /* Global Variable */
 
 double angle_initial = 0; // 구부림 센서에서 처음 return되는 값. if 기준치 이상, ERROR.
-int flex_pin = 0; // 구부림센서 핀 번호
-int buzzer_pin = 0; // 부저(스피커) 핀 번호
+int dis_initial = 0;//초음파 센서에서 처음 return되는 값. if 기준치 이하, ERROR.
+int flex_pin = A4; // 구부림센서 핀 번호
+int buzzer_pin = A8; // 부저(스피커) 핀 번호
 int joystick_VRX_pin = 0; // 조이스틱 VRX 핀 번호
 int joystick_VRY_pin = 0; // 조이스틱 VRY 핀 번호
 int joystick_SW_pin = 0; // 조이스틱 SW 핀 번호
@@ -18,7 +22,7 @@ int joystick_SW_pin = 0; // 조이스틱 SW 핀 번호
 
 /* Reference Value */
 
-double on_turtle_angle=1023; // 거북목 상태인 각도 기준값, 상수 값.
+double on_turtle_angle=50; // 거북목 상태인 각도 기준값, 상수 값.
 double on_turtle_distance=1023; // 거북목 상태인 거리 기준값, 상수 값
 
 /* Temp Value */
@@ -44,19 +48,24 @@ void setup() {
     Serial1.begin(9600); // 초음파센서에서 Data Rx
     Serial2.begin(9600); // 스마트폰으로 Data Tx
     
-    lcd.begin(16,2); //LCD 초기화
+    lcd.begin(); //LCD 초기화
     lcd.backlight(); //백라이트 on
+    char* text = "Hello, World!";
+    i2c_lcd(text,0);
+    i2c_lcd(text,1);
     
     pinMode(joystick_SW_pin, INPUT_PULLUP);//z축 버튼 
+//    
+//    angle_initial = resist_to_angle();
+//    while (angle_initial >= on_turtle_angle) {
+//        buzzer(500,4);
+//        i2c_lcd("Angle Exceed Plz", 0);
+//        i2c_lcd(" Remeasurement! ", 1);
+//        delay(3000);
+//        angle_initial = resist_to_angle();
+//    }
+
     
-    angle_initial = resist_to_angle();
-    while (angle_initial >= on_turtle_angle) {
-        buzzer(500,4);
-        i2c_lcd("Angle Exceed Plz", 0);
-        i2c_lcd(" Remeasurement! ", 1);
-        delay(3000);
-        angle_initial = resist_to_angle();
-    }
 
 
 
@@ -65,7 +74,7 @@ void setup() {
 void loop() {
     // put your main code here, to run repeatedly:
 
-
+    i2c_lcd("ABCDEFU",0);
 /*
  * 들어온 값을 if로 비교해서
  * 만약 그 값이 거북목 기준값보다 크다면
@@ -73,17 +82,27 @@ void loop() {
  * 2. i2c_lcd() 함수를 이용해서 lcd에 출력하고
  * 3. tx_message() 함수를 이용해서 휴대폰으로 보낸다.
 */
-
-    // int angle = resist_to_angle();
-    int angle = 1030;
-    int dis = distance();
-//    Serial.println(dis);
-
-    if ((angle > on_turtle_angle) || (dis > on_turtle_distance)) {
-        char* message = "your neck will be dick.";
-        tx_message(message);
+    if ( joystick == 5 ) {
+        dis_initial = distance();
+        i2c_lcd("initialized!", 0);
     }
+    double angle = resist_to_angle();
+//    Serial.println(angle);
+//    delay(500);
     
+//    if (dis_initial != 0) {
+//    int angle = 1030;
+    int now_dis = distance();
+//    Serial.println(now_dis);
+
+    if ((angle < on_turtle_angle) || (dis_initial - now_dis > on_turtle_distance)) {
+        char* message = "your neck will be dick.\n whatch this video.\nhttps://www.youtube.com/watch?v=TWGXLs5a8Ig";
+        tx_message(message);
+        i2c_lcd("Hello, World!",0);
+        buzzer(100, 3);
+        //delay(1000);
+//    }
+    }
 }
 
 
@@ -94,8 +113,8 @@ void loop() {
  * @return double 값의 각도를 return한다.
  */
 double resist_to_angle(void) {
-    double resist = analogRead(0); // 구부림 센서의 return value
-    double angle = 1.0 * resist + 0.0; // 선형회귀로 식 구하기
+    double resist = analogRead(flex_pin); // 구부림 센서의 return value
+    double angle = 0.5 * resist - 155; // 선형회귀로 식 구하기
     return angle;
 }
 
@@ -108,8 +127,7 @@ double resist_to_angle(void) {
  */
 void buzzer(int length, int time) {
     for (int k = 0; k < time; k++) {
-        tone(buzzer_pin, NOTE_C5, length);
-        delay(time/3);
+       tone(buzzer_pin, NOTE_C6, length);
     }
 }
 
@@ -172,7 +190,8 @@ int distance(void){
 //        buffer[bufferindex] = Serial.read();
 //        bufferindex++;
 //    }
-if (Serial1.available()) {
+    if (Serial1.available()) {
+//        Serial.println(Serial1.read());
         int dis;
         String string = Serial1.readStringUntil('\n');
         Serial.println(string);
