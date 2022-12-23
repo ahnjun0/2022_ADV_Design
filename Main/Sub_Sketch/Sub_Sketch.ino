@@ -1,7 +1,7 @@
 /* Global Variable */
 
-int trigpin = 0; // 초음파 센서 trigPin
-int echopin = 0; // 초음파 센서 echoPin
+int trigpin = 2; // 초음파 센서 trigPin
+int echopin = 3; // 초음파 센서 echoPin
 
 /* Reference Value */
 
@@ -24,7 +24,7 @@ void loop() {
     digitalWrite(trigpin, LOW);
     float duration = pulseIn(echopin, HIGH);
     float distance = duration * 340 / 10000 / 2;
-    Serial1.write((char*)&distance, sizeof(int)); //거리(cm)값 전송
-    
-    
+    Serial1.write((char*)&distance, sizeof(int));
+    Serial.println(distance);
 }
+
