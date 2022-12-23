@@ -22,7 +22,8 @@ double on_turtle_angle=1023; // 거북목 상태인 각도 기준값, 상수 값
 double on_turtle_distance=1023; // 거북목 상태인 거리 기준값, 상수 값
 
 /* Temp Value */
-char buffer[20];
+// char buffer[20];
+int bufferindex = 0;
 
 
 
@@ -76,6 +77,7 @@ void loop() {
     // int angle = resist_to_angle();
     int angle = 1030;
     int dis = distance();
+//    Serial.println(dis);
 
     if ((angle > on_turtle_angle) || (dis > on_turtle_distance)) {
         char* message = "your neck will be dick.";
@@ -161,11 +163,23 @@ int joystick(void){
  * @return int
  */
 int distance(void){
-    while (Serial1.available()) {
-        int data = Serial1.read();
+//    int data = atoi(buffer);
+//    for (int a=0; a<21; a++) {
+//        buffer[a] = NULL;
+//    }
+//    bufferindex = 0;
+//    while (Serial1.available()) {
+//        buffer[bufferindex] = Serial.read();
+//        bufferindex++;
+//    }
+if (Serial1.available()) {
+        int dis;
+        String string = Serial1.readStringUntil('\n');
+        Serial.println(string);
+        dis = string.toInt();
+        if (dis > 0) return dis;
 
-        return data - '0';
-    }
+     } 
 }
 
 /**
