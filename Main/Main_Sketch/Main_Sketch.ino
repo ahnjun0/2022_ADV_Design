@@ -73,6 +73,7 @@ void loop() {
  * 2. i2c_lcd() 함수를 이용해서 lcd에 출력하고
  * 3. tx_message() 함수를 이용해서 휴대폰으로 보낸다.
 */
+    lcd.clear();
     i2c_lcd("  Press Button  ", 0);
 
     if ( joystick == 5 ) {
@@ -80,8 +81,7 @@ void loop() {
         if (dis_initial > 100) dis_initial = 100; //모니터에서 인간까지 거리 상한값.
         lcd.clear();
         i2c_lcd(" Init Success!! ", 0);
-        String print_dis = "Distance : "+String(dis_initial)+"cm";
-        i2c_lcd(print_dis, 1);
+        i2c_lcd("Distance : "+String(dis_initial)+"cm", 1);
         
     }
 
@@ -94,7 +94,8 @@ void loop() {
             char* message = "Warning!! Stretch your neck plz!\nWhatch this video.\nhttps://www.youtube.com/watch?v=TWGXLs5a8Ig";
             tx_message(message);
             lcd.clear();
-            i2c_lcd("  BUZZER ON!!!  ",0);
+            i2c_lcd("   Warning!!!   ",0);
+            i2c_lcd("Angle : "+String(angle)+"deg", 1);
             buzzer(100, 3);
         }
     }
