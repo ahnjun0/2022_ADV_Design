@@ -19,14 +19,17 @@
     │   ├ Plan
     │   │   ├ 기자재신청목록_02조_정컴침팬지(11.18).xlsx
     │   │   └ 프로젝트 설계 발표자료 초안_02조_정컴침팬지(11.18).pptx
-    │   │   
-    │   └ 3DPrinter_stl
-    │       ├ Body.stl
-    │       └ Cover.stl
+    │   │
+    │   ├ 3DPrinter_stl // Case 3DPrinter 제작용
+    │   │   ├ Body.stl
+    │   │   └ Cover.stl
+    │   │
+    │   └ Presentation
     │
     ├ Main
     │   ├ Main_Sketch
-    │   │   └ Main_Sketch.ino // 착용하게 될 Main Arduino에 컴파일하는 Sketch file
+    │   │   ├ Main_Sketch.ino // 착용하게 될 Main Arduino에 컴파일하는 Sketch file
+    │   │   └ pitches.h
     │   │
     │   ├ Sub_Sketch
     │   │   └ Sub_Sketch.ino // 초음파 센서를 연결하게 될 Sub Arduino에 컴파일하는 Sketch file
@@ -34,8 +37,11 @@
     │   ├ I2C_Scanner
     │   │   └ I2C_Scanner.ino // I2C Address 확인용
     │   │
-    │   └ Regression
-    │       └ main.py
+    │   ├ Regression
+    │   │   └ main.py
+    │   │
+    │   └ Testbed // 각종 테스트용
+    │       └ Testbed.ino
     │
     └ README.md
 

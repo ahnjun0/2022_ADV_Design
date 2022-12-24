@@ -1,4 +1,4 @@
-#include <Wire.h>
+// #include <Wire.h> Included in LiquidCrystal_I2C.h
 #include <LiquidCrystal_I2C.h>
 #include <pitches.h>
 
@@ -107,7 +107,7 @@ double resist_to_angle(void) {
 /**
  * @brief 거북목 상태일 때 작동시킬 Buzzer(Speaker).
  * @param length 작동시킬 길이. ms 단위.
- * @param time 작동시킬 횟수. (예를 들자면 삑 삑 삑 삑)
+ * @param time 작동시킬 횟수. (ex. 삑 삑 삑 삑)
  */
 void buzzer(int length, int time) {
     for (int k = 0; k < time; k++) {
@@ -130,12 +130,9 @@ void i2c_lcd(String text, int k) {
 }
 
 
-
 /**
  * @brief 조이스틱의 방향에 따라, 출력값을 결정.
- * @details 조이스틱이 왼쪽으로 가면 1을 출력한다거나 하는 규칙을
- *           직접 본인이 정하셔서 doxygen @return에 적어주세요
- *           조이스틱의 동작 원리는 https://blog.naver.com/boilmint7/220927175653
+ * @details 조이스틱의 동작 원리는 https://blog.naver.com/boilmint7/220927175653
  *           해당 링크 속의 블로그를 참고하시면 편할겁니다.
  *           핀 번호는 상단에 적혀있는 joystick_NNN_value 변수를 사용해주세요
  * @param void
@@ -147,11 +144,11 @@ int joystick(void){
     bool joy_z = digitalRead(joystick_SW_pin);
     int control = 0;
   
-    if (joy_x < 512) control = 3;
-    if (joy_x > 512) control = 4;
-    if (joy_y < 512) control = 1;
-    if (joy_y > 512) control = 2;
-    if (joy_z == LOW) control = 5;
+    if (joy_x < 100) control = 3;
+    if (joy_x > 100) control = 4;
+    if (joy_y < 100) control = 1;
+    if (joy_y > 100) control = 2;
+    if (joy_z == LOW) control = 5; // Using INPUT_PULLUP
 
     delay(100);
 
@@ -181,9 +178,8 @@ int distance(void){
 
 /**
  * @brief 휴대폰으로 메시지를 전송하는 함수입니다.
- * @details Plan A. 현재 각도와 영상 링크 등이 담긴 텍스트 메시지를
- *                   BLuetooth Terminal HC-05 APP으로 전송 (시간상 문제로 가장 유력)
- *          Plan B. 별도의 Application 제작 (시간상 이유로 힘들지 않을까요?)
+ * @details 현재 각도와 영상 링크 등이 담긴 텍스트 메시지를
+ *                   BLuetooth Terminal HC-05 APP으로 전송
  * @param message 
  */
 void tx_message(char* message) {
