@@ -21,9 +21,9 @@ int joystick_SW_pin = 13; // 조이스틱 SW 핀 번호
 double on_turtle_angle = 50; // 거북목 상태인 각도 기준값, 상수 값.
 double on_turtle_distance = 30; // 거북목 상태인 거리 기준값, 상수 값
 
+
+
 /* Temp Value */
-// char buffer[20];
-int bufferindex = 0;
 
 
 
@@ -35,11 +35,10 @@ void buzzer(int length, int time);
 void i2c_lcd(String text, int k);
 void tx_message(char* message);
 int joystick(void);
-// void menutree_depth_1(void);
-// void menutree_depth_2(void);
+
+
 
 void setup() {
-    // put your setup code here, to run once:
     Serial.begin(9600);
     Serial1.begin(9600); // 초음파센서에서 Data Rx
     Serial2.begin(9600); // 스마트폰으로 Data Tx
@@ -47,23 +46,13 @@ void setup() {
     lcd.begin(); //LCD 초기화
     lcd.backlight(); //백라이트 on
 
-    
     pinMode(joystick_SW_pin, INPUT_PULLUP);//z축 버튼  
-//    angle_initial = resist_to_angle();
-//    while (angle_initial >= on_turtle_angle) {
-//        buzzer(500,4);
-//        i2c_lcd("Angle Exceed Plz", 0);
-//        i2c_lcd(" Remeasurement! ", 1);
-//        delay(3000);
-//        angle_initial = resist_to_angle();
-//    }
 
-        lcd.clear();
-        i2c_lcd("  Press Button  ", 0);
-
-
-
+    lcd.clear();
+    i2c_lcd("  Press Button  ", 0);
 }
+
+
 
 void loop() {
 
@@ -75,22 +64,20 @@ void loop() {
  * 3. tx_message() 함수를 이용해서 휴대폰으로 보낸다.
 */
 
-
     if ( joystick() == 5 ) {
         dis_initial = distance();
         if (dis_initial > 100) dis_initial = 100; //모니터에서 인간까지 거리 상한값.
         lcd.clear();
         i2c_lcd(" Init Success!! ", 0);
-        i2c_lcd("Distance : "+String(dis_initial)+"cm", 1);
-        
+        i2c_lcd("Distance : "+String(dis_initial)+"cm", 1);        
     }
 
     if (dis_initial != 0) {
         double angle = resist_to_angle();
         int now_dis = distance();
-        if (dis_initial > 100) dis_initial = 100;
+        if (dis_initial > 60) dis_initial = 60;
         
-        if ((angle < on_turtle_angle) || (dis_initial - now_dis > on_turtle_distance)) {
+        if ((angle < on_turtle_angle) && (dis_initial - now_dis > on_turtle_distance)) {
             char* message = "Warning!! Stretch your neck plz!\nWhatch this video.\nhttps://www.youtube.com/watch?v=TWGXLs5a8Ig";
             tx_message(message);
             lcd.clear();
@@ -100,6 +87,7 @@ void loop() {
         }
     }
 }
+
 
 
 /**
@@ -170,6 +158,8 @@ int joystick(void){
     return control;
 }
 
+
+
 /**
  * @brief 모니터와 이용자의 거리를 전송받는 함수입니다.
  * @details
@@ -177,17 +167,7 @@ int joystick(void){
  * @return int
  */
 int distance(void){
-//    int data = atoi(buffer);
-//    for (int a=0; a<21; a++) {
-//        buffer[a] = NULL;
-//    }
-//    bufferindex = 0;
-//    while (Serial1.available()) {
-//        buffer[bufferindex] = Serial.read();
-//        bufferindex++;
-//    }
     if (Serial1.available()) {
-//        Serial.println(Serial1.read());
         int dis;
         String string = Serial1.readStringUntil('\n');
         Serial.println(string);
@@ -196,6 +176,8 @@ int distance(void){
 
      } 
 }
+
+
 
 /**
  * @brief 휴대폰으로 메시지를 전송하는 함수입니다.
@@ -207,5 +189,3 @@ int distance(void){
 void tx_message(char* message) {
     Serial2.println(message);
 }
-
-//testabc
