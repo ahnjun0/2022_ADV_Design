@@ -10,9 +10,9 @@ double angle_initial = 0; // 구부림 센서에서 처음 return되는 값. if 
 int dis_initial = 0;//초음파 센서에서 처음 return되는 값. if 기준치 이하, ERROR.
 int flex_pin = A4; // 구부림센서 핀 번호
 int buzzer_pin = A8; // 부저(스피커) 핀 번호
-int joystick_VRX_pin = 0; // 조이스틱 VRX 핀 번호
-int joystick_VRY_pin = 0; // 조이스틱 VRY 핀 번호
-int joystick_SW_pin = 0; // 조이스틱 SW 핀 번호
+int joystick_VRX_pin = A0; // 조이스틱 VRX 핀 번호
+int joystick_VRY_pin = A1; // 조이스틱 VRY 핀 번호
+int joystick_SW_pin = 13; // 조이스틱 SW 핀 번호
 
 
 
@@ -58,7 +58,8 @@ void setup() {
 //        angle_initial = resist_to_angle();
 //    }
 
-    
+        lcd.clear();
+        i2c_lcd("  Press Button  ", 0);
 
 
 
@@ -73,8 +74,7 @@ void loop() {
  * 2. i2c_lcd() 함수를 이용해서 lcd에 출력하고
  * 3. tx_message() 함수를 이용해서 휴대폰으로 보낸다.
 */
-    lcd.clear();
-    i2c_lcd("  Press Button  ", 0);
+
 
     if ( joystick == 5 ) {
         dis_initial = distance();
@@ -156,7 +156,7 @@ void i2c_lcd(String text, int k) {
 int joystick(void){
     int joy_x = analogRead(joystick_VRX_pin);
     int joy_y = analogRead(joystick_VRY_pin);
-    int joy_z = digitalRead(joystick_SW_pin);
+    bool joy_z = digitalRead(joystick_SW_pin);
     int control = 0;
   
     if (joy_x < 512) control = 3;
