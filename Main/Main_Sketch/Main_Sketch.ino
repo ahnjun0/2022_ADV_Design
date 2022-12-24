@@ -89,14 +89,29 @@ void loop() {
         double angle = resist_to_angle();
         int now_dis = distance();
         if (dis_initial > 100) dis_initial = 100;
-        
-        if ((angle < on_turtle_angle) || (dis_initial - now_dis > on_turtle_distance)) {
-            char* message = "Warning!! Stretch your neck plz!\nWhatch this video.\nhttps://www.youtube.com/watch?v=TWGXLs5a8Ig";
-            tx_message(message);
-            lcd.clear();
-            i2c_lcd("   Warning!!!   ",0);
-            i2c_lcd("Angle : "+String(angle)+"deg", 1);
-            buzzer(100, 3);
+        i2c_lcd("Press right: show angle", 0);
+        i2c_lcd("Press left: show distance", 1);
+        if (angle < on_turtle_angle) {
+            if (joystick() == 3) {
+                lcd.clear();
+                char* message = "Warning!! Stretch your neck plz!\nWhatch this video.\nhttps://www.youtube.com/watch?v=TWGXLs5a8Ig";
+                tx_message(message);
+                lcd.clear();
+                i2c_lcd("   Warning!!!   ",0);
+                i2c_lcd("Angle : "+String(angle)+"deg", 1);
+                buzzer(100, 3);
+            }
+        }
+        if (dis_initial - now_dis > on_turtle_distance) {
+            if (joystick() == 4) {
+                lcd.clear();
+                char* message = "Warning!! Stretch your neck plz!\nWhatch this video.\nhttps://www.youtube.com/watch?v=TWGXLs5a8Ig";
+                tx_message(message);
+                lcd.clear();
+                i2c_lcd("   Warning!!!   ",0);
+                i2c_lcd("Angle : "+String(angle)+"deg", 1);
+                buzzer(100, 3);
+              }
         }
     }
 }
