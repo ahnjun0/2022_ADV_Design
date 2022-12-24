@@ -76,7 +76,7 @@ void loop() {
 */
 
 
-    if ( joystick() == 5 ) {
+    if ( joystick == 5 ) {
         dis_initial = distance();
         if (dis_initial > 100) dis_initial = 100; //모니터에서 인간까지 거리 상한값.
         lcd.clear();
