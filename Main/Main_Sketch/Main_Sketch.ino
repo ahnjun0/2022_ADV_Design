@@ -18,8 +18,8 @@ int joystick_SW_pin = 0; // 조이스틱 SW 핀 번호
 
 /* Reference Value */
 
-double on_turtle_angle=50; // 거북목 상태인 각도 기준값, 상수 값.
-double on_turtle_distance=1023; // 거북목 상태인 거리 기준값, 상수 값
+double on_turtle_angle = 50; // 거북목 상태인 각도 기준값, 상수 값.
+double on_turtle_distance = 30; // 거북목 상태인 거리 기준값, 상수 값
 
 /* Temp Value */
 // char buffer[20];
@@ -32,7 +32,7 @@ int bufferindex = 0;
 double resist_to_angle(void);
 int distance(void);
 void buzzer(int length, int time);
-void i2c_lcd(char* text, int k);
+void i2c_lcd(String text, int k);
 void tx_message(char* message);
 int joystick(void);
 // void menutree_depth_1(void);
@@ -48,8 +48,7 @@ void setup() {
     lcd.backlight(); //백라이트 on
 
     
-    pinMode(joystick_SW_pin, INPUT_PULLUP);//z축 버튼 
-//    
+    pinMode(joystick_SW_pin, INPUT_PULLUP);//z축 버튼  
 //    angle_initial = resist_to_angle();
 //    while (angle_initial >= on_turtle_angle) {
 //        buzzer(500,4);
@@ -66,8 +65,6 @@ void setup() {
 }
 
 void loop() {
-    // put your main code here, to run repeatedly:
-
 
 /*
  * 들어온 값을 if로 비교해서
@@ -76,26 +73,30 @@ void loop() {
  * 2. i2c_lcd() 함수를 이용해서 lcd에 출력하고
  * 3. tx_message() 함수를 이용해서 휴대폰으로 보낸다.
 */
+    i2c_lcd("  Press Button  ", 0);
+
     if ( joystick == 5 ) {
         dis_initial = distance();
-        i2c_lcd("initialized!", 0);
+        if (dis_initial > 100) dis_initial = 100; //모니터에서 인간까지 거리 상한값.
+        lcd.clear();
+        i2c_lcd(" Init Success!! ", 0);
+        String print_dis = "Distance : "+String(dis_initial)+"cm";
+        i2c_lcd(print_dis, 1);
+        
     }
-    double angle = resist_to_angle();
-//    Serial.println(angle);
-//    delay(500);
-    
-//    if (dis_initial != 0) {
-//    int angle = 1030;
-    int now_dis = distance();
-//    Serial.println(now_dis);
 
-    if ((angle < on_turtle_angle) || (dis_initial - now_dis > on_turtle_distance)) {
-        char* message = "your neck will be dick.\n whatch this video.\nhttps://www.youtube.com/watch?v=TWGXLs5a8Ig";
-        tx_message(message);
-        i2c_lcd("  BUZZER ON!!!  ",0);
-        buzzer(100, 3);
-        //delay(1000);
-//    }
+    if (dis_initial != 0) {
+        double angle = resist_to_angle();
+        int now_dis = distance();
+        if (dis_initial > 100) dis_initial = 100;
+        
+        if ((angle < on_turtle_angle) || (dis_initial - now_dis > on_turtle_distance)) {
+            char* message = "Warning!! Stretch your neck plz!\nWhatch this video.\nhttps://www.youtube.com/watch?v=TWGXLs5a8Ig";
+            tx_message(message);
+            lcd.clear();
+            i2c_lcd("  BUZZER ON!!!  ",0);
+            buzzer(100, 3);
+        }
     }
 }
 
@@ -134,7 +135,7 @@ void buzzer(int length, int time) {
  * @param text pointer 방식으로 char* 문자열이 들어옵니다
  * @param k int 방식으로 줄 번호를 알려줍니다. (k = 0일때 16x2에서 0번째 줄)
  */
-void i2c_lcd(char* text, int k) {
+void i2c_lcd(String text, int k) {
     lcd.setCursor(0, k);
     lcd.print(text);
 }
