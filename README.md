@@ -37,6 +37,9 @@
     │   ├ I2C_Scanner
     │   │   └ I2C_Scanner.ino // I2C Address 확인용
     │   │
+    │   ├ library
+    │   │   └ Arduino-LiquidCrystal-I2C-library-master.zip // I2C LCD 사용 위한 Library, [https://github.com/fdebrabander/Arduino-LiquidCrystal-I2C-library]
+    │   │
     │   ├ Regression
     │   │   └ main.py
     │   │
