@@ -33,7 +33,7 @@ double resist_to_angle(void);
 int distance(void);
 void buzzer(int length, int time);
 void i2c_lcd(String text, int k);
-void tx_message(char* message);
+void tx_message(String message);
 int joystick(void);
 // void menutree_depth_1(void);
 // void menutree_depth_2(void);
@@ -76,27 +76,43 @@ void loop() {
 */
 
 
-    if ( joystick() == 5 ) {
+    if ( joystick == 5 ) {
         dis_initial = distance();
         if (dis_initial > 100) dis_initial = 100; //모니터에서 인간까지 거리 상한값.
         lcd.clear();
-        i2c_lcd(" Init Success!! ", 0);
-        i2c_lcd("Distance : "+String(dis_initial)+"cm", 1);
-        
+        // i2c_lcd(" Init Success!! ", 0);
+        // i2c_lcd("Distance : "+String(dis_initial)+"cm", 1);
+        tx_message(" Init Success!! ");
+        tx_message("Distance : "+String(dis_initial)+"cm");
     }
 
     if (dis_initial != 0) {
         double angle = resist_to_angle();
         int now_dis = distance();
         if (dis_initial > 100) dis_initial = 100;
-        
-        if ((angle < on_turtle_angle) || (dis_initial - now_dis > on_turtle_distance)) {
-            char* message = "Warning!! Stretch your neck plz!\nWhatch this video.\nhttps://www.youtube.com/watch?v=TWGXLs5a8Ig";
-            tx_message(message);
-            lcd.clear();
-            i2c_lcd("   Warning!!!   ",0);
-            i2c_lcd("Angle : "+String(angle)+"deg", 1);
-            buzzer(100, 3);
+        i2c_lcd("left: angle", 0);
+        i2c_lcd("right: distance", 1);
+        if (angle < on_turtle_angle) {
+            if (joystick() == 3) {
+                lcd.clear();
+                String message = "Warning!! Stretch your neck plz!\nWhatch this video.\nhttps://www.youtube.com/watch?v=TWGXLs5a8Ig";
+                tx_message(message);
+                lcd.clear();
+                i2c_lcd("   Warning!!!   ",0);
+                i2c_lcd("Angle : "+String(angle)+"deg", 1);
+                buzzer(100, 3);
+            }
+        }
+        if (dis_initial - now_dis > on_turtle_distance) {
+            if (joystick() == 4) {
+                lcd.clear();
+                String message = "Warning!! Stretch your neck plz!\nWhatch this video.\nhttps://www.youtube.com/watch?v=TWGXLs5a8Ig";
+                tx_message(message);
+                lcd.clear();
+                i2c_lcd("   Warning!!!   ",0);
+                i2c_lcd("Distance : "+String(now_dis)+"cm", 1);
+                buzzer(100, 3);
+              }
         }
     }
 }
@@ -133,7 +149,7 @@ void buzzer(int length, int time) {
  * @brief text로 들어온 파일을 16*2 LCD에 출력하도록 하는 함수입니다.
  * @details 입력은 16자 전부와, 줄 번호가 들어옵니다. (0번 줄, 1번 줄)
  *           https://popcorn16.tistory.com/206 참고하시면 좋습니다.
- * @param text pointer 방식으로 char* 문자열이 들어옵니다
+ * @param String 자료형으로 문자열이 들어옵니다
  * @param k int 방식으로 줄 번호를 알려줍니다. (k = 0일때 16x2에서 0번째 줄)
  */
 void i2c_lcd(String text, int k) {
@@ -204,6 +220,6 @@ int distance(void){
  *          Plan B. 별도의 Application 제작 (시간상 이유로 힘들지 않을까요?)
  * @param message 
  */
-void tx_message(char* message) {
+void tx_message(String message) {
     Serial2.println(message);
 }
