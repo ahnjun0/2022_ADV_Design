@@ -109,7 +109,7 @@ void loop() {
                 tx_message(message);
                 lcd.clear();
                 i2c_lcd("   Warning!!!   ",0);
-                i2c_lcd("Angle : "+String(angle)+"deg", 1);
+                i2c_lcd("Distance : "+String(now_dis)+"cm", 1);
                 buzzer(100, 3);
               }
         }
