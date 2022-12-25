@@ -98,7 +98,7 @@ void loop() {
  */
 double resist_to_angle(void) {
     double resist = analogRead(flex_pin); // 구부림 센서의 return value
-    double angle = 0.4795 * resist - 144.6578; // 선형회귀로 식 구하기
+    double angle = 0.4795 * resist - 144.6579; // 선형회귀로 식 구하기
     return angle;
 }
 

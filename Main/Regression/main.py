@@ -4,7 +4,7 @@ import seaborn as sns
 from sklearn.linear_model import LinearRegression
 
 
-data = pd.read_csv("C:/PNUCSE/2022_ADV_Design/Main/Regression/measurement.csv")
+data = pd.read_csv("2022_ADV_Design\Main\Regression\measurement.csv")
 # data.head()
 
 plt.figure(figsize=(8,8))
