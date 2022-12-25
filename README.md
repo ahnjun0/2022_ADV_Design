@@ -1,4 +1,4 @@
-# 목을 펴자! 거북목 예방 및 자세 교정 서비스
+# 목을 펴자! 거북목 예방 및 자세교정 서비스
 
 2022학년도 2학기 어드벤처디자인 과목(아두이노) 팀프로젝트 협업을 위한 repo입니다.
 
@@ -25,6 +25,7 @@
     │   │   └ Cover.stl
     │   │
     │   └ Presentation
+    │       └ 프로젝트 결과 발표자료_02조_정컴침팬지.pptx
     │
     ├ Main
     │   ├ Main_Sketch
@@ -38,10 +39,13 @@
     │   │   └ I2C_Scanner.ino // I2C Address 확인용
     │   │
     │   ├ library
-    │   │   └ Arduino-LiquidCrystal-I2C-library-master.zip // I2C LCD 사용 위한 Library, [https://github.com/fdebrabander/Arduino-LiquidCrystal-I2C-library]
+    │   │   └ Arduino-LiquidCrystal-I2C-library-master.zip // I2C LCD 사용 위한 Library
+    │   │    [https://github.com/fdebrabander/Arduino-LiquidCrystal-I2C-library]
     │   │
     │   ├ Regression
-    │   │   └ main.py
+    │   │   ├ main.py
+    │   │   ├ measurement.csv // 측정한 각도-저항값 데이터
+    │   │   └ LinearRegression.png
     │   │
     │   └ Testbed // 각종 테스트용
     │       └ Testbed.ino
