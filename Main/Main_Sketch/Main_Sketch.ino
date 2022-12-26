@@ -75,10 +75,10 @@ void loop() {
     if (dis_initial != 0) {
         double angle = resist_to_angle();
         int now_dis = distance();
-        if (dis_initial > 60) dis_initial = 60;
+        if (dis_initial > 100) dis_initial = 100;
         
         if ((angle < on_turtle_angle) && (dis_initial - now_dis > on_turtle_distance)) {
-            char* message = "Warning!! Stretch your neck plz!\nWhatch this video.\nhttps://www.youtube.com/watch?v=TWGXLs5a8Ig\n";
+            char* message = "Warning!! Stretch your neck plz!\nWhatch this video.\nhttps://www.youtube.com/watch?v=TWGXLs5a8Ig\n\n";
             tx_message(message);
             lcd.clear();
             i2c_lcd("   Warning!!!   ",0);
