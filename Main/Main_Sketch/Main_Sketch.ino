@@ -78,7 +78,7 @@ void loop() {
         if (dis_initial > 60) dis_initial = 60;
         
         if ((angle < on_turtle_angle) && (dis_initial - now_dis > on_turtle_distance)) {
-            char* message = "Warning!! Stretch your neck plz!\nWhatch this video.\nhttps://www.youtube.com/watch?v=TWGXLs5a8Ig";
+            char* message = "Warning!! Stretch your neck plz!\nWhatch this video.\nhttps://www.youtube.com/watch?v=TWGXLs5a8Ig\n";
             tx_message(message);
             lcd.clear();
             i2c_lcd("   Warning!!!   ",0);
